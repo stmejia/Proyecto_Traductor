@@ -12,6 +12,7 @@ void addData();
 void listData();
 void editData();
 void deleteData();
+void filtrarData();
 
 //Método principal.
 int main(){
@@ -33,11 +34,12 @@ int main(){
 		cout<<""<<endl;
 		cout<<"\n\n\t\t\t\t\Menu de operaciones"<<endl;
 		cout<<"\t\t\t\t\*******************"<<endl;
-		cout<<"\t\t\t\t1.Leer"<<endl;
+		cout<<"\t\t\t\t1.Listar"<<endl;
 		cout<<"\t\t\t\t2.Crear"<<endl;
 		cout<<"\t\t\t\t3.Actualizar"<<endl;
-		cout<<"\t\t\t\t4.Borrar"<<endl;
-		cout<<"\t\t\t\t5.Salir"<<endl;
+		cout<<"\t\t\t\t4.Filtrar"<<endl;
+		cout<<"\t\t\t\t5.Borrar"<<endl;
+		cout<<"\t\t\t\t6.Salir"<<endl;
 		//Esperamos la respuesta del usuario.
 		cout<<"\t\t\t\tIngresa una opcion: ";
 		cin>>opcion;
@@ -71,7 +73,7 @@ int main(){
 				
 			case '3':
 				system("cls");
-				cout<<"\n\n\t\t\t\t\Modificar registro"<<endl;
+				cout<<"\n\n\t\t\t\t\Modificando registro"<<endl;
 				cout<<"\t\t\t\t\*********************"<<endl;
 				cout<<""<<endl;
 				editData();
@@ -80,14 +82,23 @@ int main(){
 				
 			case '4':
 				system("cls");
-				cout<<"\n\n\t\t\t\t\Eliminar registro"<<endl;
+				cout<<"\n\n\t\t\t\t\Filtrar registros"<<endl;
+				cout<<"\t\t\t\t\*********************"<<endl;
+				cout<<""<<endl;
+				filtrarData();
+				pausa();
+				break;
+				
+			case '5':
+				system("cls");
+				cout<<"\n\n\t\t\t\t\Eliminando registro"<<endl;
 				cout<<"\t\t\t\t\*********************"<<endl;
 				cout<<""<<endl;
 				deleteData();
 				pausa();
 				break;
 				
-			case '5':
+			case '6':
 				system("cls");
 				bandera=true;
 				cout << ""<<endl;	
@@ -121,13 +132,13 @@ void addData(){
     cin.ignore();
     
     //Recibimos la data.
-    cout << "\t\t\t\t\Ingrese el ID : ";
+    cout << "\t\t\t\t\Ingresa el ID : ";
 	cin.getline(ID,25);
-	cout << "\t\t\t\t\Ingrese una sentencia : ";
+	cout << "\t\t\t\t\Ingresa una sentencia : ";
 	cin.getline(ESP,25);
-	cout << "\t\t\t\t\Ingrese la traduccion : ";
+	cout << "\t\t\t\t\Ingresa la traduccion : ";
 	cin.getline(ENG,25);
-	cout << "\t\t\t\t\Ingrese su funcionalidad : ";
+	cout << "\t\t\t\t\Ingresa su funcionalidad : ";
 	cin.getline(FUNC,25);
 	data<< ID<<':'<<ESP<<'|'<<ENG<<'|'<<FUNC<<'\n';
 	
@@ -152,7 +163,7 @@ void listData(){
 		while(file.good())
         {
             getline(file,linea);
-            cout << "\t\t\t\t" << line << endl;
+            cout << "\t\t\t\t" << linea << endl;
         }
         
         file.close();
@@ -173,7 +184,7 @@ void editData(){
     char FUNC[25];
     char CAD[25];
     cin.ignore();
-    cout<<" \n\t Ingresa el ID del registro que quieras modificar : ";
+    cout<<" \n\t\t\t\t\Ingresa el ID del registro que quieras modificar : ";
     cin.getline(CAD,25);
     while(!data.eof())
     {
@@ -183,12 +194,12 @@ void editData(){
         data.getline(FUNC,25);
         if(strcmp(ID,CAD)==0)
         {
-            cout<<" \n\Ingresa los nuevos valores  \n ";
-            cout<<" \n Sentencia : ";
+            cout<<" \n\t\t\t\t\Ingresa los nuevos valores  \n ";
+            cout<<" \n\t\t\t\t\ Sentencia : ";
             cin.getline(ESP,25);
-            cout<<" \n Traduccion : ";
+            cout<<" \n\t\t\t\t\ Traduccion : ";
             cin.getline(ENG,25);
-            cout<<" \n Funcion : ";
+            cout<<" \n\t\t\t\t\ Funcion : ";
             cin.getline(FUNC,25);
             temp<< ID<<':'<<ESP<<'|'<<ENG<<'|'<<FUNC<<endl;
         }
@@ -284,6 +295,42 @@ void deleteData(){
 	datos_salida.close();
 }
 
+//Metodo para filtrar la data.
+void filtrarData(){
+	//Variables generales.
+	fstream data;
+    data.open("data.txt",ios::in);
+    char ID [25];
+    char ESP[25];
+    char ENG[25];
+    char FUNC[25];
+    char CAD[25];
+    
+    cout<<" \n\t\t\t\t Ingresa el ID del registro que quieres consultar : ";
+    cin.ignore();
+    cin.getline(CAD,25);
+    int x=0;
+    cout<< " \n\t\t\t\t ID \t SENTENCIA \t TRADUCCION \t FUNCION \n";
+    while(!data.eof())
+    {
+        data.getline(ID,25,':');
+        data.getline(ESP,25,'|');
+        data.getline(ENG,25,'|');
+        data.getline(FUNC,25);
+        if(strcmp(ID, CAD)==0)
+        {
+        	cout<< "\n \t\t\t\t"<< ID<<"\t"<<ESP<<"\t"<<ENG<<"\t"<<FUNC<<endl;
+            x=1;
+            break;
+        }
+
+    }
+    if(x==0)
+    {
+        cout<<" \n\t\t\t\t\ No se encontro el registro, verifica el ID ingresado. \n";
+    }
+    data.close();
+}
 //Método para regresar al menú principal.
 void pausa()
 {
