@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <windows.h>
 
 using namespace std;
 void addData();
@@ -13,6 +14,8 @@ void listData();
 void editData();
 void deleteData();
 void filtrarData();
+void barra();
+void pausa();
 
 //Método principal.
 int main(){
@@ -21,7 +24,8 @@ int main(){
 	bool bandera = false;
 	char opcion;
 	void pausa();
-	
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\Cargando...";
+	barra();
 	do{
 		system("color 1e");
 		//Limpiamos la pantalla.
@@ -34,11 +38,11 @@ int main(){
 		cout<<""<<endl;
 		cout<<"\n\n\t\t\t\t\Menu de operaciones"<<endl;
 		cout<<"\t\t\t\t\*******************"<<endl;
-		cout<<"\t\t\t\t1.Listar"<<endl;
-		cout<<"\t\t\t\t2.Crear"<<endl;
+		cout<<"\t\t\t\t1.Consultar"<<endl;
+		cout<<"\t\t\t\t2.Registrar"<<endl;
 		cout<<"\t\t\t\t3.Actualizar"<<endl;
 		cout<<"\t\t\t\t4.Filtrar"<<endl;
-		cout<<"\t\t\t\t5.Borrar"<<endl;
+		cout<<"\t\t\t\t5.Eliminar"<<endl;
 		cout<<"\t\t\t\t6.Salir"<<endl;
 		//Esperamos la respuesta del usuario.
 		cout<<"\t\t\t\tIngresa una opcion: ";
@@ -91,7 +95,7 @@ int main(){
 				
 			case '5':
 				system("cls");
-				cout<<"\n\n\t\t\t\t\Eliminando registro"<<endl;
+				cout<<"\n\n\t\t\t\tEliminando registro"<<endl;
 				cout<<"\t\t\t\t\*********************"<<endl;
 				cout<<""<<endl;
 				deleteData();
@@ -109,7 +113,7 @@ int main(){
 				
 			default:
 				system("cls");
-				cout << "Debe seleccionar una opcion valida.\n";
+				cout << "\n\n\n\n\n\n\n\n\n\n\t\t\t\t\Debe seleccionar una opcion valida.\n";
 				pausa();
 				break;
 		}
@@ -255,26 +259,27 @@ void deleteData(){
 	datos_entrada.close();
 	
 	//Pintamos los registros existentes.
-	cout << "Estos son los registros actuales:" << endl;
+	cout << "\t\t\t\tEstos son los registros actuales:" << endl;
 	for (size_t i = 1; i < id; ++i)
 	{
-		cout<< datos[i] << endl;
+		cout<<"\t\t\t\t"<< datos[i] << endl;
 	}
 	
 	size_t ID_USER = 0; //ID que ingresará el usuario.
 	cout << "" << endl;
-	cout << "Ingresa el ID del registro que deseas eliminar:" << endl;
+	cout << "\t\t\t\t\Ingresa el ID del registro que deseas eliminar: ";
 	cin >> ID_USER;
 	
 	//Validamos si el registro existe para poder eliminarlo.
 	if (ID_USER < 0 || ID_USER >= id)
 	{
-		cout << "No existe el registro, por favor verifique el ID." << endl;
+		cout << "";
+		cout << "\t\t\t\t\No existe el registro, por favor verifique el ID." << endl;
 	}
 	else
 	{
 		cout << "" << endl;
-		cout << "Registro eliminado exitosamente ID: " << ID_USER << ": " << datos[ID_USER] << endl;
+		cout << "\t\t\t\t\Registro eliminado exitosamente: "  << datos[ID_USER] << endl;
 		//Eliminamos el registro seleccionado.
 		datos[ID_USER].erase();
 	}
@@ -282,12 +287,13 @@ void deleteData(){
 	//Creamos la secuencia y abrimos el archivo con los datos actualizados.
 	ofstream datos_salida("data.txt");
 	//Pintamos los registros actualizados en pantalla.
-	cout << "Registros actualizados:" << endl;
+	cout << "" << endl;
+	cout << "\t\t\t\t\Registros actualizados:" << endl;
 	for (size_t i = 0; i < id; ++i)
 	{
 		if (!datos[i].empty())
 		{
-			cout << i << ": " << datos[i] << endl; 
+			cout <<"\t\t\t\t" << datos[i] << endl; 
 			datos_salida << datos[i] << endl;
 		}
 	}
@@ -331,6 +337,21 @@ void filtrarData(){
     }
     data.close();
 }
+
+//Barra de carga
+void barra(){
+   //Variables generales
+   system("color 0e");
+   int barl = 60;
+   cout << "\n\n\t\t\t\[";     
+   for (int i = 0; i < barl; i++) {         
+      Sleep(100);       
+      cout << ":";  
+   }
+   cout << "]"<<endl;
+   //pausa();
+}
+
 //Método para regresar al menú principal.
 void pausa()
 {
