@@ -6,114 +6,73 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <windows.h>
 
 using namespace std;
-void addData();
-void listData();
-void editData();
-void deleteData();
 
-//Método principal.
-int main(){
-	//Variables para el Menu Principal.
-	//Mientras la bandera sea 0 procedemos a pintar el menu.
-	bool bandera = false;
-	char opcion;
-	void pausa();
+class Traductor_Fase1{
+	private : char palabrasTotales[500];	
+	public : int contadorDatos=0;
 	
-	do{
-		system("color 1e");
-		//Limpiamos la pantalla.
-		system("cls");
-		cin.clear();
-		//Pintamos el menu principal.
-		//cout<<"\n\n\t\t\t\t\*********************"<<endl;
-		cout<<"\n\n\t\t\t\t\t\t\Bienvenido al sistema"<<endl;
-		cout<<"\t\t\t\t\t\t\*********************"<<endl;
-		cout<<""<<endl;
-		cout<<"\n\n\t\t\t\t\Menu de operaciones"<<endl;
-		cout<<"\t\t\t\t\*******************"<<endl;
-		cout<<"\t\t\t\t1.Leer"<<endl;
-		cout<<"\t\t\t\t2.Crear"<<endl;
-		cout<<"\t\t\t\t3.Actualizar"<<endl;
-		cout<<"\t\t\t\t4.Borrar"<<endl;
-		cout<<"\t\t\t\t5.Salir"<<endl;
-		//Esperamos la respuesta del usuario.
-		cout<<"\t\t\t\tIngresa una opcion: ";
-		cin>>opcion;
-		
-		//Variables generales.
-		//string STRING;
-		//ifstream infile;
-		//fstream file;
-		//char ESP[200];
-	    //char ENG[200];
-	    //char FUNC[200];
-		
-		switch(opcion){
-			case '1':
-				system("cls");
-				cout<<"\n\n\t\t\t\t\Datos registrados"<<endl;
-				cout<<"\t\t\t\t\*********************"<<endl;
-				cout<<""<<endl;
-				listData();
-				pausa();
-				break;
-			
-			case '2':
-				system("cls");
-				cout<<"\n\n\t\t\t\t\Nuevo registro"<<endl;
-				cout<<"\t\t\t\t\*********************"<<endl;
-				cout<<""<<endl;
-				addData();
-				pausa();
-				break;
-				
-			case '3':
-				system("cls");
-				cout<<"\n\n\t\t\t\t\Modificar registro"<<endl;
-				cout<<"\t\t\t\t\*********************"<<endl;
-				cout<<""<<endl;
-				editData();
-				pausa();
-				break;
-				
-			case '4':
-				system("cls");
-				cout<<"\n\n\t\t\t\t\Eliminar registro"<<endl;
-				cout<<"\t\t\t\t\*********************"<<endl;
-				cout<<""<<endl;
-				deleteData();
-				pausa();
-				break;
-				
-			case '5':
-				system("cls");
-				bandera=true;
-				cout << ""<<endl;	
-				cout<<"\t\t\t\t\**********************************"<<endl;
-				cout << "\t\t\t\t\Gracias por utilizar el sistema c:";
-				cout<<"\n\t\t\t\t\**********************************"<<endl;
-				break;
-				
-			default:
-				system("cls");
-				cout << "Debe seleccionar una opcion valida.\n";
-				pausa();
-				break;
+	public: 
+	struct Datos{
+		string id;
+		string palabra;
+		string traduccion;
+		string funcionalidad;
+	}Palabras[200];
+	
+	//Metodo para llenar Palabras
+	void obtenerDatos(){
+		int contTemp=0;
+		contadorDatos = 0;	
+		string datAlone;
+		unsigned pos;
+		char delimitador[] = "|";
+
+		ifstream archivo;
+		string contenido;
+		archivo.open("data.txt",ios::app);
+		if (archivo.fail()){
+			cout<<"No es posible abrir el archivo";
+			exit(1);
+		}else{
+			do{
+				getline(archivo,contenido);
+				if(!contenido.empty()){
+					strcpy(palabrasTotales, contenido.c_str());
+					char *dato = strtok(palabrasTotales, delimitador);
+					string dat(dato);
+					if(dato != NULL){
+						pos =  dat.find(":");
+						datAlone = dat.substr(pos+1);
+						Palabras[contadorDatos].id = dat.substr(0, pos);
+						Palabras[contadorDatos].palabra = datAlone;
+						contTemp=0;
+						while((dato=strtok(NULL, delimitador)) != NULL){
+							string dat2(dato);
+							if (contTemp==0){
+								Palabras[contadorDatos].traduccion = dat2;
+								contTemp++;
+							} else{
+								Palabras[contadorDatos].funcionalidad = dat2;
+								contTemp++;
+							} 
+						}	
+					}	
+					contadorDatos++;
+				}
+			}while(!archivo.eof());
 		}
-	}while(bandera!=true);
-	
-	return 0;
-}
-
-//Método que agrega la data.
+		archivo.close();
+	}
+	//Método que agrega la data.
 void addData(){
 	//Variables generales.
 	char ID [25];
-	char ESP[25];
-	char ENG[25];
-	char FUNC[25];
+	char ESP[50];
+	char ENG[50];
+	char FUNC[200];
 	
 	//Creamos y abrimos el archivo en modo append.
 	fstream data;
@@ -121,14 +80,14 @@ void addData(){
     cin.ignore();
     
     //Recibimos la data.
-    cout << "\t\t\t\t\Ingrese el ID : ";
+    cout << "\t\t\t\t\Ingresa el ID : ";
 	cin.getline(ID,25);
-	cout << "\t\t\t\t\Ingrese una sentencia : ";
-	cin.getline(ESP,25);
-	cout << "\t\t\t\t\Ingrese la traduccion : ";
-	cin.getline(ENG,25);
-	cout << "\t\t\t\t\Ingrese su funcionalidad : ";
-	cin.getline(FUNC,25);
+	cout << "\t\t\t\t\Ingresa una sentencia : ";
+	cin.getline(ESP,50);
+	cout << "\t\t\t\t\Ingresa la traduccion : ";
+	cin.getline(ENG,50);
+	cout << "\t\t\t\t\Ingresa su funcionalidad : ";
+	cin.getline(FUNC,200);
 	data<< ID<<':'<<ESP<<'|'<<ENG<<'|'<<FUNC<<'\n';
 	
 	cout << "" << endl;
@@ -152,7 +111,7 @@ void listData(){
 		while(file.good())
         {
             getline(file,linea);
-            cout << "\t\t\t\t" << line << endl;
+            cout << "\t\t\t\t" << linea << endl;
         }
         
         file.close();
@@ -168,28 +127,28 @@ void editData(){
     data.open("data.txt",ios::in);
     temp.open("temp.txt",ios::out);
     char ID [25];
-    char ESP[25];
-    char ENG[25];
-    char FUNC[25];
+    char ESP[50];
+    char ENG[50];
+    char FUNC[200];
     char CAD[25];
     cin.ignore();
-    cout<<" \n\t Ingresa el ID del registro que quieras modificar : ";
+    cout<<" \n\t\t\t\t\Ingresa el ID del registro que quieras modificar : ";
     cin.getline(CAD,25);
     while(!data.eof())
     {
         data.getline(ID,25,':');
-        data.getline(ESP,25,'|');
-        data.getline(ENG,25,'|');
-        data.getline(FUNC,25);
+        data.getline(ESP,50,'|');
+        data.getline(ENG,50,'|');
+        data.getline(FUNC,200);
         if(strcmp(ID,CAD)==0)
         {
-            cout<<" \n\Ingresa los nuevos valores  \n ";
-            cout<<" \n Sentencia : ";
-            cin.getline(ESP,25);
-            cout<<" \n Traduccion : ";
-            cin.getline(ENG,25);
-            cout<<" \n Funcion : ";
-            cin.getline(FUNC,25);
+            cout<<" \n\t\t\t\t\Ingresa los nuevos valores  \n ";
+            cout<<" \n\t\t\t\t\ Sentencia : ";
+            cin.getline(ESP,50);
+            cout<<" \n\t\t\t\t\ Traduccion : ";
+            cin.getline(ENG,50);
+            cout<<" \n\t\t\t\t\ Funcion : ";
+            cin.getline(FUNC,200);
             temp<< ID<<':'<<ESP<<'|'<<ENG<<'|'<<FUNC<<endl;
         }
         else
@@ -205,9 +164,9 @@ void editData(){
     while(!temp.eof())
     {
     	temp.getline(ID,25,':');
-        temp.getline(ESP,25,'|');
-        temp.getline(ENG,25,'|');
-        temp.getline(FUNC,25);
+        temp.getline(ESP,50,'|');
+        temp.getline(ENG,50,'|');
+        temp.getline(FUNC,200);
         data<< ID<<':'<<ESP<<'|'<<ENG<<'|'<<FUNC<<'\n';
     }
     temp.close();
@@ -244,26 +203,27 @@ void deleteData(){
 	datos_entrada.close();
 	
 	//Pintamos los registros existentes.
-	cout << "Estos son los registros actuales:" << endl;
+	cout << "\t\t\t\tEstos son los registros actuales:" << endl;
 	for (size_t i = 1; i < id; ++i)
 	{
-		cout<< datos[i] << endl;
+		cout<<"\t\t\t\t"<< datos[i] << endl;
 	}
 	
 	size_t ID_USER = 0; //ID que ingresará el usuario.
 	cout << "" << endl;
-	cout << "Ingresa el ID del registro que deseas eliminar:" << endl;
+	cout << "\t\t\t\t\Ingresa el ID del registro que deseas eliminar: ";
 	cin >> ID_USER;
 	
 	//Validamos si el registro existe para poder eliminarlo.
 	if (ID_USER < 0 || ID_USER >= id)
 	{
-		cout << "No existe el registro, por favor verifique el ID." << endl;
+		cout << "";
+		cout << "\t\t\t\t\No existe el registro, por favor verifique el ID." << endl;
 	}
 	else
 	{
 		cout << "" << endl;
-		cout << "Registro eliminado exitosamente ID: " << ID_USER << ": " << datos[ID_USER] << endl;
+		cout << "\t\t\t\t\Registro eliminado exitosamente: "  << datos[ID_USER] << endl;
 		//Eliminamos el registro seleccionado.
 		datos[ID_USER].erase();
 	}
@@ -271,12 +231,13 @@ void deleteData(){
 	//Creamos la secuencia y abrimos el archivo con los datos actualizados.
 	ofstream datos_salida("data.txt");
 	//Pintamos los registros actualizados en pantalla.
-	cout << "Registros actualizados:" << endl;
+	cout << "" << endl;
+	cout << "\t\t\t\t\Registros actualizados:" << endl;
 	for (size_t i = 0; i < id; ++i)
 	{
 		if (!datos[i].empty())
 		{
-			cout << i << ": " << datos[i] << endl; 
+			cout <<"\t\t\t\t" << datos[i] << endl; 
 			datos_salida << datos[i] << endl;
 		}
 	}
@@ -284,10 +245,163 @@ void deleteData(){
 	datos_salida.close();
 }
 
+//Metodo para filtrar la data.
+void filtrarData(){
+	//Variables generales.
+	fstream data;
+    data.open("data.txt",ios::in);
+    char ID [25];
+    char ESP[50];
+    char ENG[50];
+    char FUNC[200];
+    char CAD[25];
+    
+    cout<<" \n\t\t\t\t Ingresa el ID del registro que quieres consultar : ";
+    cin.ignore();
+    cin.getline(CAD,25);
+    int x=0;
+    cout<< " \n\t\t\t\t ID \t SENTENCIA \t TRADUCCION \t FUNCION \n";
+    while(!data.eof())
+    {
+        data.getline(ID,25,':');
+        data.getline(ESP,50,'|');
+        data.getline(ENG,50,'|');
+        data.getline(FUNC,200);
+        if(strcmp(ID, CAD)==0)
+        {
+        	cout<< "\n \t\t\t\t"<< ID<<"\t"<<ESP<<"\t"<<ENG<<"\t"<<FUNC<<endl;
+            x=1;
+            break;
+        }
+
+    }
+    if(x==0)
+    {
+        cout<<" \n\t\t\t\t\ No se encontro el registro, verifica el ID ingresado. \n";
+    }
+    data.close();
+}
+
+//Barra de carga
+void barra(){
+   //Variables generales
+   system("color 0e");
+   int barl = 60;
+   cout << "\n\n\t\t\t\[";     
+   for (int i = 0; i < barl; i++) {         
+      Sleep(100);       
+      cout << ":";  
+   }
+   cout << "]"<<endl;
+   //pausa();
+}
+
 //Método para regresar al menú principal.
-void pausa()
-{
+void pausa(){
     cout << "\n\t\t\t\t\Pulsa una tecla para regresar al menu principal...";
     getwchar();
     getwchar();
 }
+
+//Método principal.
+	void realizarCrud(){
+	//Variables para el Menu Principal.
+	//Mientras la bandera sea 0 procedemos a pintar el menu.
+	bool bandera = false;
+	char opcion;
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\Cargando...";
+	barra();
+	do{
+		system("color 1e");
+		//Limpiamos la pantalla.
+		system("cls");
+		cin.clear();
+		//Pintamos el menu principal.
+		//cout<<"\n\n\t\t\t\t\*********************"<<endl;
+		cout<<"\n\n\t\t\t\t\t\t\Bienvenido al sistema"<<endl;
+		cout<<"\t\t\t\t\t\t\*********************"<<endl;
+		cout<<""<<endl;
+		cout<<"\n\n\t\t\t\t\Menu de operaciones"<<endl;
+		cout<<"\t\t\t\t\*******************"<<endl;
+		cout<<"\t\t\t\t1.Consultar"<<endl;
+		cout<<"\t\t\t\t2.Registrar"<<endl;
+		cout<<"\t\t\t\t3.Actualizar"<<endl;
+		cout<<"\t\t\t\t4.Filtrar"<<endl;
+		cout<<"\t\t\t\t5.Eliminar"<<endl;
+		cout<<"\t\t\t\t6.Salir"<<endl;
+		//Esperamos la respuesta del usuario.
+		cout<<"\t\t\t\tIngresa una opcion: ";
+		cin>>opcion;
+		
+		//Variables generales.
+		//string STRING;
+		//ifstream infile;
+		//fstream file;
+		//char ESP[200];
+	    //char ENG[200];
+	    //char FUNC[200];
+		
+		switch(opcion){
+			case '1':
+				system("cls");
+				cout<<"\n\n\t\t\t\t\Datos registrados"<<endl;
+				cout<<"\t\t\t\t\*********************"<<endl;
+				cout<<""<<endl;
+				listData();
+				pausa();
+				break;
+			
+			case '2':
+				system("cls");
+				cout<<"\n\n\t\t\t\t\Nuevo registro"<<endl;
+				cout<<"\t\t\t\t\*********************"<<endl;
+				cout<<""<<endl;
+				addData();
+				pausa();
+				break;
+				
+			case '3':
+				system("cls");
+				cout<<"\n\n\t\t\t\t\Modificando registro"<<endl;
+				cout<<"\t\t\t\t\*********************"<<endl;
+				cout<<""<<endl;
+				editData();
+				pausa();
+				break;
+				
+			case '4':
+				system("cls");
+				cout<<"\n\n\t\t\t\t\Filtrar registros"<<endl;
+				cout<<"\t\t\t\t\*********************"<<endl;
+				cout<<""<<endl;
+				filtrarData();
+				pausa();
+				break;
+				
+			case '5':
+				system("cls");
+				cout<<"\n\n\t\t\t\tEliminando registro"<<endl;
+				cout<<"\t\t\t\t\*********************"<<endl;
+				cout<<""<<endl;
+				deleteData();
+				pausa();
+				break;
+				
+			case '6':
+				system("cls");
+				bandera=true;
+				cout << ""<<endl;	
+				cout<<"\t\t\t\t\**********************************"<<endl;
+				cout << "\t\t\t\t\Gracias por utilizar el sistema c:";
+				cout<<"\n\t\t\t\t\**********************************"<<endl;
+				break;
+				
+			default:
+				system("cls");
+				cout << "\n\n\n\n\n\n\n\n\n\n\t\t\t\t\Debe seleccionar una opcion valida.\n";
+				pausa();
+				break;
+		}
+	}while(bandera!=true);
+}
+};

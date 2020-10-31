@@ -1,0 +1,2 @@
+1:if|si|es una estructura de control que valida una condicion y nos permiten determinar que acciones tomar dada o no cierta condicion
+2:while|mientras|Ciclo que permite ejecutarse mientras una determinada condicion sea cumplida

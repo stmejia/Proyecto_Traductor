@@ -1,11 +1,12 @@
 #include<iostream>
 #include<fstream>
 #include<string.h>
-#include "Diccionario.cpp"
+#include <windows.h>
+#include "Traductor_Fase1.cpp"
 
 using namespace std;
 
-Diccionario diccionario = Diccionario();
+Traductor_Fase1 diccionario = Traductor_Fase1();
 char palabrasTotales[500];
 void modificacion();
 void traducir();
@@ -16,8 +17,10 @@ int contador = 0;
 int cont2 = 0;
 
 main(){
+	system("color 1e");
 	int opc = 0;
 	while(opc != 3){
+		system("cls");
 		cout<<"Ingrese el numero de la accion que desea realizar"<<endl;
 		cout<<"1. Modificar archivo"<<endl;
 		cout<<"2. Traductor de palabras reservadas"<<endl;
@@ -25,9 +28,11 @@ main(){
 		cin>>opc;
 		
 		if(opc == 1){
-			
+			diccionario.realizarCrud();
+			system("cls");
 		} else if(opc == 2){
 			traducir();
+			system("cls");
 			/*string cod;
 			cout<<"Ingrese algo xd"<<endl;
 			cin.ignore();
@@ -39,11 +44,11 @@ main(){
 }
 
 void traducir(){
-	/*diccionario.obtenerDatos();
-	for(int j=0; j<diccionario.contador;j++){
+	diccionario.obtenerDatos();
+	for(int j=0; j<diccionario.contadorDatos;j++){
 		cout<<"Palabra: "<<diccionario.Palabras[j].palabra<<endl;
 		cout<<"Traduccion: "<<diccionario.Palabras[j].traduccion<<endl;
-	}*/
+	}
 	std::fill_n(DatosTraducidos,500,0);
 	std::fill_n(datosTempunto,500,0);
 	contador=0;
@@ -77,13 +82,18 @@ void traducir(){
 			char *datoLlave = strtok(palabrasTotales, delLlave);
 			string datLlave(datoLlave);
 			if(datoLlave != NULL){
-				datosTempLlave[]
+				datosTempLlave[cont2] = datLlave;
+				cont2++;
 			}
 		}
+		datosTempLlave[cont2] = "}";
+		cont2++;
 	}
 	cout<<endl;
-	for(int i=0; i<contador;i++){
-		cout<<datosTempunto[i]<<endl;
+	cout<<"--------------------------------------------"<<endl;
+	for(int i=0; i<cont2;i++){
+		cout<<datosTempLlave[i]<<endl;
 	}
-	
+	cout<<"--------------------------------------------"<<endl;
+	diccionario.pausa();
 }
