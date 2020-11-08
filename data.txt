@@ -1,2 +1,61 @@
-1:if|si|es una estructura de control que valida una condicion y nos permiten determinar que acciones tomar dada o no cierta condicion
-2:while|mientras|Ciclo que permite ejecutarse mientras una determinada condicion sea cumplida
+1:asm|ensamblador|Permite incluir codigo ensamblador dentro del programa
+2:auto|automatica|Sirve para declarar variables ahorrando la declaracion del tipo de variable
+3:bool|boleano|Declara un tipo de variable que solo puede tener como valores verdadero o falso
+4:break|romper|Se usa para interrumpir la ejecucion normal de un bucle
+5:case|caso|Crea una etiqueta para una opcion que se compara con la opcion que recibe swith
+6:catch|captura|Se utiliza para capturar excepciones
+7:char|caracter|Sirve para representar o contener un solo caracter
+8:class|clase|Sirve para declarar una clase
+9:const|constante|Sirve para declarar variables u objetos como inmutables
+10:const_cast|conversion constante|Sirve para utilizar punteros que no son de tipo constante donde se necesite hacer referencia a una constante
+11:continue|continuar|Se utiliza para interrumpir y forzar la siguiente interacion de un bucle
+12:default|por defecto|Hace que se ejecuten las instrucciones a continuacion de ella en caso de que la ejecucion del programa llegue a alcanzarla
+13:delete|eliminar|Se utiliza para liberar la memoria dinamica reservada con new
+14:do|hacer|Se ejecuta junto con while, definiendo que el ciclo se ejecutara por lo menos una vez sea o no cumplida la condicion
+15:double|doble|Permite declarar variables que permiten almacenar numeros en formato de coma flotante, mantisa y exponente
+16:dynamic_cast|convertir dinamico|Se usa para hacer cambios de tipo durante la ejecucion
+17:else|entonces|Indica la accion o conjunto de acciones a llevar a cabo, en caso de que la condicion del if no se cumpla
+18:enum|enumerar|Sirve para dar inicio a una estructura enumerada
+19:explicit|explicito|Evita que el compilador pueda usar en un constructor conversiones implicitas
+20:extern|externo|Se utiliza para exponer variables pertenecientes a un archivo a uno o varios archivos adicionales
+21:false|falso|Tipo predefinido que se emplea con la convencion consistente en que se considera falso el valor numerico 0
+22:float|flotante|Tipo de variable que almacena numeros en formato de coma flotante
+23:for|para|Es una sentencia que implementa un bucle, repitiendo un grupo de sentencias un numero determinado de veces
+24:friend|amigo|Es una funcion que no pertenece a la clase, pero que tiene permiso para acceder a sus variables y funciones miembro privadas por medio de los operadores punto
+25:goto|ir a|Es una instruccion que transfiere el control a un punto determinado del codigo, don de debe continuar la ejecucion
+26:if|si|Su funcion es realizar o no una determinada accion o sentencia, basandose en el resultado de la evaluacion de una expresion
+27:inline|en linea|Indica al compilador que cada llamada a la funcion debera ser reemplazada por el cuerpo de esta funcion
+28:int|entero|Sirve para declarar una variable de tipo entero en la cual se pueden almacenar solo numeros enteros tanto negativos o positivos
+29:long|largo|Se refiere a un tipo de dato de punto (o coma)flotante que suele ser mas preciso que un double
+30:mutable|mudable|Indica que el miembro sigue siendo variable aunque la instancia de si clase sea declarada const
+31:namespace|espacio de nombres|Es una forma de crear un bloque y que todas las funciones que esten dentro del mismo, esten asociadas a ese namespace
+32:new|nuevo|proporciona espacio de almacenamineto persistene, similar pero superior a la funcion de la libreria estandar MALLOC
+33:operator|operador|permite sobrecargar un operador con otro
+34:private|privado|indica que solo esta disponible para ser accedido dentro de la clase que los define
+35:protected|protegido|indica que solo es accesible en la clase que los define y en otras clases que heredan de esa clase
+36:public|publico|inidica que es accesible desde dentro y fuera de la clase
+37:register|registrarse|se utiliza para indicar al compilador que ciertas variables deben ser almacendas en los registros del procesador en lugar de la pila
+38:reinterpret_cast|reinterpretar conversion|obliga al compilador a aceptar un tipo de objeto por otro
+39:return|retornar|termina la ejecucion de una funcion y devuelve el control a la funcion llamada
+40:short|corto|Se refiere a un tipo de dato de punto (o coma) flotante modificando su rango
+41:signed|con signo|Define que el valor de una variable numerica puede ser positivo o negativo
+42:sizeof|tamanio de|Se utiliza para determinar la variable o el tipo de datos en bytes
+43:static|estatico|Restringe su ambito al archivo donde se definen
+44:static_cast|conversion estatico|Se usa en los casos en que el programador desea documentar las conversiones de tipo implicitas, con objeto de aclarar que realmente se desean hacer esas conversiones
+45:struct|estructura|Indica que los elementos que vienen agrupados a continuacion entre llaves componen una estructura
+46:switch|cambiar|son una estructura de control condicional, que permite definir multiples casos que puede llegar a cumplir una variable cualquiera
+47:template|plantilla|Permite que las funciones y clases operen con tipo genericos
+48:this|esto|Para cada objeto declarado de una clase se mantiene una copia de sus datos, pero todos se comparten la misma copia de las funciones de esa clase
+49:throw|lanzar|se comporta como un return, el valor devuelto por el throw se asigna al objeto de catch adecuado
+50:true|verdadero|Tipo predefinido que se emplea con la convencion consistente en que se considera verdadero el valor numerico 1
+51:try|intentar|pretende evaluar una o mas expresiones y si dentro de dicho bloque se produce un algo que no se espera se lanza por medio de throw una excepcion, la misma que debera ser capturada por un catch especifico
+52:typedef|definicion tipo| Su funcion es asignar un nombre alternativo a tipos existentes, a menudo cuando su declaracion normal es aparatosa, potencialmente confusa o probablemente variable de una implementacion a otra
+53:typeid|id tipo|identifica un operador con el que puede obtenerse el tipo de objetos y expresiones en tiempo de ejecucion
+54:typename|nombre tipo|indica que el identificador que la acompaña es un tipo 
+55:union|union|es un tipo de datos derivado, como una estructura, con miembros que comparten el mismo espacio de almacenamiento
+56:unsigned|sin signo|se utiliza cuando la variable sea siempre positiva. Puesto que no es necesario almacenar el signo, el valor absoluto puede ser mayor que en las versiones con signo
+57:using|usando|define un ambito al final del cual se eliminara un objeto
+58:virtual|virtual|es una funcion que es declarada como 'virtual' en una clase base y es redefinida en una o mas clases derivadas
+59:void|vacio|define el concepto de no existencia o no atribucion de un tipo de una variable o declaracion
+60:volatile|volatil|indica que una variable no solo modifica tu programa sino alguien mas, siendo este un componente del hardware
+61:while|mientras|es una estructura ciclica que permite ejecutar una o varias lineas de codigo de manera repetitivasin necesidad de tener un valor inicial e incluso a veces sin siquiera conocer cuando se va a dar el valor final que esperamos
